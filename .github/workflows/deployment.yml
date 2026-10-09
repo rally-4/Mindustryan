@@ -22,33 +22,9 @@ jobs:
         java-version: 17
     - name: Set env
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-    - name: Add Arc release
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "Github Actions"
-        git clone --depth=1 --branch=master https://github.com/Anuken/Arc ../Arc
-        cd ../Arc
-        git tag ${RELEASE_VERSION}
-        git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/Arc ${RELEASE_VERSION};
-        cd ../Mindustryan
     - name: Create artifacts
       run: |
         ./gradlew desktop:dist server:dist core:depsJar core:assetsJar core:mergedJavadoc -Pbuildversion=${RELEASE_VERSION:1}
-    - name: Update docs
-      run: |
-        cd ../
-        git config --global user.email "cli@github.com"
-        git config --global user.name "Github Actions"
-        git clone --depth=1 https://github.com/MindustryGame/docs.git
-        cd docs
-        find . -maxdepth 1 ! -name ".git" ! -name . -exec rm -r {} \;
-        cd ../
-        cp -a Mindustryan/core/build/javadoc/. docs/
-        cd docs
-        git add .
-        git commit --allow-empty -m "Update ${RELEASE_VERSION:1}"
-        git push https://Anuken:${{ secrets.API_TOKEN_ORG_GITHUB }}@github.com/MindustryGame/docs
-        cd ../Mindustryan
     - name: Update F-Droid build string
       run: |
         git clone --depth=1 --branch=master https://github.com/rally-4/MindustryanBuilds ../MindustryanBuilds
