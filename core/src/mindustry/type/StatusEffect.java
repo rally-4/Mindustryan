@@ -91,7 +91,7 @@ public class StatusEffect extends UnlockableContent{
 
     @Override
     public boolean isHidden(){
-        return localizedName.equals(name) || !show;
+        return true;
     }
 
     @Override
