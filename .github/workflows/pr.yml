@@ -29,4 +29,4 @@ jobs:
       with:
         name: Desktop JAR
         archive: false
-        path: desktop/build/libs/Mindustry.jar
+        path: desktop/build/libs/Mindustryan.jar
