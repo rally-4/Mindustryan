@@ -93,8 +93,10 @@ public class TantrosPlanetGenerator extends PlanetGenerator{
         height *= 1.2f;
         height = Mathf.clamp(height);
 
-        // float tar = (float)noise.octaveNoise3D(4, 0.55f, 1f/2f, position.x, position.y + 999f, position.z) * 0.3f + Tmp.v31.dsdst, 0, 1f) * 0.2f;
-        
+        float tar = (float)Simplex.noise3d(seed, 4, 0.55f, 1f/2f, position.x, position.y + 999f, position.z) * 0.4f + Tmp.v31.dst(0, 0, 1f) * 0.2f;
+        if(tar > 0.5f){
+            return Blocks.tar;
+        }
         
         return arr[Mathf.clamp((int)(temp * arr.length), 0, arr[0].length - 1)][Mathf.clamp((int)(height * arr[0].length), 0, arr[0].length - 1)];
     }
