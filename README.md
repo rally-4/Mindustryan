@@ -1,6 +1,6 @@
 ![Logo](core/assets-raw/sprites/ui/logo.png)
 
-[![Build Status](https://github.com/Anuken/Mindustry/workflows/Tests/badge.svg?event=push)](https://github.com/Anuken/Mindustry/actions)  
+[![Build Status](https://github.com/rally-4/Mindustryan/workflows/Tests/badge.svg?event=push)](https://github.com/rally-4/Mindustryan/actions)  
 
 ## Contributing
 
