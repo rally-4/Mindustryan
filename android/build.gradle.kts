@@ -118,22 +118,8 @@ android{
                 "proguard-rules.pro"
             )
         }
-        
         if(project.hasProperty("RELEASE_STORE_FILE") || System.getenv("CI") == "true"){
             getByName("release"){
-                minifyEnabled = true
-                shrinkResources = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android.txt"),
-                    "proguard-rules.pro"
-                )
-                // R8 configuration, disable obfuscation but keep optimization
-                postprocessing{
-                    obfuscationEnabled = false
-                    optimizationEnabled = true
-                    removeUnusedCode = true
-                    removeUnusedResources = false
-                }
                 signingConfig = signingConfigs.getByName("release")
             }
         }
