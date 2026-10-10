@@ -117,6 +117,12 @@ android{
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            postprocessing{
+                obfuscationEnabled = false
+                optimizationEnabled = true
+                removeUnusedCode = true
+                removeUnusedResources = false
+            }
         }
         if(project.hasProperty("RELEASE_STORE_FILE") || System.getenv("CI") == "true"){
             getByName("release"){
