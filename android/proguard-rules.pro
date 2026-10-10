@@ -1,3 +1,4 @@
+-dontoptimize
 -dontobfuscate
 
 -keep class mindustry.** { *; }
