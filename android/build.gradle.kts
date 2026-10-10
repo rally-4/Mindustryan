@@ -111,17 +111,29 @@ android{
 
     buildTypes{
         all{
-            //TODO without these lines (r8 enabled), Mindustry crashes with missing default interface method errors.
-            //WHY THE HELL ARE DEFAULT INTERFACES NOT BEING DESUGARED? WHY DID UPDATING AGP MAKE THIS HAPPEN?
-            //When I ENABLE shrinking, r8 goes and REMOVES ALL DEFAULT INTERFACE CLASSES, which breaks mods. Why?
-            //-keep class mindustry.** { *; } should *keep the classes* - WHY IS R8 REMOVING THEM?
             isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles("proguard-rules.pro")
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
         }
-
+        
         if(project.hasProperty("RELEASE_STORE_FILE") || System.getenv("CI") == "true"){
             getByName("release"){
+                minifyEnabled = true
+                shrinkResources = false
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android.txt"),
+                    "proguard-rules.pro"
+                )
+                // R8 configuration, disable obfuscation but keep optimization
+                postprocessing{
+                    obfuscationEnabled = false
+                    optimizationEnabled = true
+                    removeUnusedCode = true
+                    removeUnusedResources = false
+                }
                 signingConfig = signingConfigs.getByName("release")
             }
         }
