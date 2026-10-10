@@ -1,6 +1,6 @@
 name: Tests
 
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 
 permissions: {}
 jobs:
@@ -13,14 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - name: Trigger BE build
-      if: ${{ github.repository == 'Anuken/Mindustry' }}
+      if: ${{ github.repository == 'rally-4/Mindustryan' }}
       run: |
-        git clone --depth=1 --branch=master https://github.com/Anuken/MindustryBuilds ../MindustryBuilds
-        cd ../MindustryBuilds
+        git clone --depth=1 --branch=master https://github.com/rally-4/MindustryanBuilds ../MindustryanBuilds
+        cd ../MindustryanBuilds
         BNUM=$(($GITHUB_RUN_NUMBER + 20000))
         git tag ${BNUM}
         git config --global user.name "Github Actions"
-        git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/MindustryBuilds ${BNUM}
+        git push https://rally-4:${{ secrets.API_TOKEN_GITHUB }}@github.com/rally-4/MindustryanBuilds ${BNUM}
     - name: Set up JDK 17
       uses: actions/setup-java@v5
       with:
@@ -29,7 +29,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v6
     - name: Update bundles
-      if: ${{ github.repository == 'Anuken/Mindustry' }}
+      if: ${{ github.repository == 'rally-4/Mindustryan' }}
       run: |
         ./gradlew -DcompileMethodParams updateBundles
 
@@ -41,7 +41,7 @@ jobs:
           git push
         fi
     - name: Update scripts, class mappings and map names
-      if: ${{ github.repository == 'Anuken/Mindustry' }}
+      if: ${{ github.repository == 'rally-4/Mindustryan' }}
       run: |
         ./gradlew -DcompileMethodParams updateScripts fixMaps
 
