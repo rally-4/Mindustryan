@@ -25,11 +25,11 @@ run{
     if(vfile.exists()){
         vfile.inputStream().use{ props.load(it) }
     }else{
-        props["app.id"] = "io.anuke.mindustry"
-        props["app.version"] = "7.0"
+        props["app.id"] = "io.rally.mindustryan"
+        props["app.version"] = "9.0"
         props["app.mainclass"] = "mindustry.ios.IOSLauncher"
         props["app.executable"] = "IOSLauncher"
-        props["app.name"] = "Mindustry"
+        props["app.name"] = "Mindustryan"
     }
 
     props["app.build"] = (if(!props.containsKey("app.build")) 40 else props.getProperty("app.build").toInt() + 1).toString()
