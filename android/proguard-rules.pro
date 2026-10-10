@@ -1,7 +1,6 @@
 -dontobfuscate
 
 -keep class mindustry.** { *; }
--keep class mindustry.annotations.Annotations* { *; }
 -keep class arc.** { *; }
 -keep class net.jpountz.** { *; }
 -keep class rhino.** { *; }
