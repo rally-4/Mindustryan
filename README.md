@@ -2,12 +2,6 @@
 
 [![Build Status](https://github.com/rally-4/Mindustryan/workflows/Tests/badge.svg?event=push)](https://github.com/rally-4/Mindustryan/actions)  
 
-The automation tower defense RTS, written in Java.
-
-_[Trello Board](https://trello.com/b/aE2tcUwF/mindustry-40-plans)_  
-_[Wiki](https://mindustrygame.github.io/wiki)_  
-_[Javadoc](https://mindustrygame.github.io/docs/)_ 
-
 ## Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md) for general code style and PR guidelines.
