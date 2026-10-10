@@ -43,7 +43,7 @@ tasks.register<Copy>("deploy"){
 }
 
 android{
-    namespace = "io.anuke.mindustry"
+    namespace = "io.rally.mindustryan"
     compileSdk = 36
 
     sourceSets{
@@ -71,7 +71,7 @@ android{
         val vcode = props.getProperty("androidBuildCode")?.toInt() ?: 1
         val versionNameResult = "$versionNumber-$versionType-${buildVersion.replace(" ", "-")}"
 
-        applicationId = "io.anuke.mindustry"
+        applicationId = "io.rally.mindustryan"
         minSdk = 21
         targetSdk = 36
 
