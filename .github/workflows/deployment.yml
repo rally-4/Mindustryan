@@ -25,37 +25,22 @@ jobs:
     - name: Create artifacts
       run: |
         ./gradlew desktop:dist server:dist core:depsJar core:assetsJar core:mergedJavadoc -Pbuildversion=${RELEASE_VERSION:1}
-    - name: Update docs
-      run: |
-        cd ../
-        git config --global user.email "cli@github.com"
-        git config --global user.name "Github Actions"
-        git clone --depth=1 https://github.com/MindustryGame/docs.git
-        cd docs
-        find . -maxdepth 1 ! -name ".git" ! -name . -exec rm -r {} \;
-        cd ../
-        cp -a Mindustry/core/build/javadoc/. docs/
-        cd docs
-        git add .
-        git commit --allow-empty -m "Update ${RELEASE_VERSION:1}"
-        git push https://Anuken:${{ secrets.API_TOKEN_ORG_GITHUB }}@github.com/MindustryGame/docs
-        cd ../Mindustry
     - name: Update F-Droid build string
       run: |
-        git clone --depth=1 --branch=master https://github.com/Anuken/MindustryBuilds ../MindustryBuilds
-        cd ../MindustryBuilds
+        git clone --depth=1 --branch=master https://github.com/rally-4/MindustryanBuilds ../MindustryanBuilds
+        cd ../MindustryanBuilds
         echo "Updating version to ${RELEASE_VERSION:1}"
         BNUM=$(($GITHUB_RUN_NUMBER + 1000))
         echo versionName=8-fdroid-${RELEASE_VERSION:1}$'\n'versionCode=${BNUM} > version_fdroid.txt
         git add .
         git commit -m "Updating to build ${RELEASE_VERSION:1}"
-        git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/MindustryBuilds
-        cd ../Mindustry
+        git push https://rally-4:${{ secrets.API_TOKEN_GITHUB }}@github.com/rally-4/MindustryanBuilds
+        cd ../Mindustryan
     - name: Upload client artifacts
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: desktop/build/libs/Mindustry.jar
+        file: desktop/build/libs/Mindustryan.jar
         tag: ${{ github.ref }}
     - name: Upload server artifacts
       uses: svenstaro/upload-release-action@v2
