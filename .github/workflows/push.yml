@@ -18,9 +18,18 @@ jobs:
         git clone --depth=1 --branch=master https://github.com/rally-4/MindustryanBuilds ../MindustryanBuilds
         cd ../MindustryanBuilds
         BNUM=$(($GITHUB_RUN_NUMBER + 20000))
+        echo "BNUM=${BNUM}" >> $GITHUB_ENV
         git tag ${BNUM}
         git config --global user.name "Github Actions"
         git push https://rally-4:${{ secrets.API_TOKEN_GITHUB }}@github.com/rally-4/MindustryanBuilds ${BNUM}
+    - name: Create Release
+      if: ${{ github.repository == 'rally-4/Mindustryan' }}
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+        repo: MindustryanBuilds
+        tag: ${{ env.BNUM }}
+        allowUpdates: true
     - name: Set up JDK 17
       uses: actions/setup-java@v5
       with:
