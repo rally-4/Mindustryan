@@ -26,7 +26,6 @@ import mindustry.ui.dialogs.*;
 import org.lwjgl.*;
 import org.lwjgl.sdl.*;
 import org.lwjgl.system.*;
-import steamworks.*;
 
 import java.io.*;
 import java.util.*;
@@ -38,7 +37,6 @@ public class DesktopLauncher extends ClientLauncher{
     public final String[] args;
 
     boolean useDiscord = !OS.hasProp("nodiscord"), loadError = false;
-    Throwable steamError;
 
     public static void main(String[] arg){
         try{
@@ -49,13 +47,13 @@ public class DesktopLauncher extends ClientLauncher{
             checkJavaVersion();
 
             new SdlApplication(new DesktopLauncher(arg), new SdlConfig(){{
-                title = "Mindustry";
+                title = "Mindustryan";
                 maximized = true;
                 coreProfile = true;
                 width = 900;
                 height = 700;
                 appName = "Mindustry";
-                appIdentifier = "io.anuke.mindustry";
+                appIdentifier = "io.rally.mindustryan";
                 appVersion = Version.buildString();
 
                 if(OS.isMac){
@@ -156,138 +154,6 @@ public class DesktopLauncher extends ClientLauncher{
                 }
             });
         }
-
-        if(Version.isSteam){
-            Events.on(ClientLoadEvent.class, event -> {
-                if(steamError != null){
-                    Core.app.post(() -> Core.app.post(() -> Core.app.post(() -> {
-                        ui.showErrorMessage(Core.bundle.format("steam.error", (steamError.getMessage() == null) ? steamError.getClass().getSimpleName() : steamError.getClass().getSimpleName() + ": " + steamError.getMessage()));
-                    })));
-                }
-            });
-
-            try{
-                SteamAPI.loadLibraries();
-
-                if(!SteamAPI.init()){
-                    loadError = true;
-                    Log.err("Steam client not running.");
-                }else{
-                    initSteam(args);
-                    Vars.steam = true;
-                }
-
-                if(SteamAPI.restartAppIfNecessary(SVars.steamID)){
-                    System.exit(0);
-                }
-            }catch(Throwable e){
-                steam = false;
-                Log.err("Failed to load Steam native libraries.");
-                logSteamError(e);
-            }
-        }
-    }
-
-    void logSteamError(Throwable e){
-        steamError = e;
-        loadError = true;
-        Log.err(e);
-        try(OutputStream s = new FileOutputStream("steam-error-log-" + System.nanoTime() + ".txt")){
-            String log = Strings.neatError(e);
-            s.write(log.getBytes());
-        }catch(Exception e2){
-            Log.err(e2);
-        }
-    }
-
-    void initSteam(String[] args){
-        SVars.net = new SNet(new ArcNetProvider());
-        SVars.stats = new SStats();
-        SVars.workshop = new SWorkshop();
-        SVars.user = new SUser();
-        boolean[] isShutdown = {false};
-
-        service = new GameService(){
-
-            @Override
-            public boolean enabled(){
-                return true;
-            }
-
-            @Override
-            public void completeAchievement(String name){
-                SVars.stats.stats.setAchievement(name);
-                SVars.stats.stats.storeStats();
-            }
-
-            @Override
-            public void clearAchievement(String name){
-                SVars.stats.stats.clearAchievement(name);
-                SVars.stats.stats.storeStats();
-            }
-
-            @Override
-            public boolean isAchieved(String name){
-                return SVars.stats.stats.isAchieved(name, false);
-            }
-
-            @Override
-            public int getStat(String name, int def){
-                return SVars.stats.stats.getStatI(name, def);
-            }
-
-            @Override
-            public void setStat(String name, int amount){
-                SVars.stats.stats.setStatI(name, amount);
-            }
-
-            @Override
-            public void storeStats(){
-                SVars.stats.onUpdate();
-            }
-        };
-
-        Events.on(ClientLoadEvent.class, event -> {
-            Core.settings.defaults("name", SVars.net.friends.getPersonaName());
-            if(player.name.isEmpty()){
-                player.name = SVars.net.friends.getPersonaName();
-                Core.settings.put("name", player.name);
-            }
-            steamPlayerName = SVars.net.friends.getPersonaName();
-            //update callbacks
-            Core.app.addListener(new ApplicationListener(){
-                @Override
-                public void update(){
-                    if(SteamAPI.isSteamRunning()){
-                        SteamAPI.runCallbacks();
-                    }
-                }
-            });
-
-            Core.app.post(() -> {
-                if(args.length >= 2 && args[0].equals("+connect_lobby")){
-                    try{
-                        long id = Long.parseLong(args[1]);
-                        ui.join.connect("steam:" + id, port);
-                    }catch(Exception e){
-                        Log.err("Failed to parse steam lobby ID: @", e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-            });
-        });
-
-        Events.on(DisposeEvent.class, event -> {
-            SteamAPI.shutdown();
-            isShutdown[0] = true;
-        });
-
-        //steam shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if(!isShutdown[0]){
-                SteamAPI.shutdown();
-            }
-        }));
     }
 
     static void handleCrash(Throwable e){
@@ -389,51 +255,9 @@ public class DesktopLauncher extends ClientLauncher{
     }
 
     @Override
-    public Seq<Fi> getWorkshopContent(Class<? extends Publishable> type){
-        return !steam ? super.getWorkshopContent(type) : SVars.workshop.getWorkshopFiles(type);
-    }
-
-    @Override
-    public void viewListing(Publishable pub){
-        SVars.workshop.viewListing(pub);
-    }
-
-    @Override
-    public void viewListingID(String id){
-        SVars.net.friends.activateGameOverlayToWebPage("steam://url/CommunityFilePage/" + id);
-    }
-
-    @Override
-    public NetProvider getNet(){
-        return steam ? SVars.net : new ArcNetProvider();
-    }
-
-    @Override
-    public void openWorkshop(){
-        SVars.net.friends.activateGameOverlayToWebPage("https://steamcommunity.com/app/1127400/workshop/");
-    }
-
-    @Override
-    public void publish(Publishable pub){
-        SVars.workshop.publish(pub);
-    }
-
-    @Override
-    public void inviteFriends(){
-        SVars.net.showFriendInvites();
-    }
-
-    @Override
-    public void updateLobby(){
-        if(SVars.net != null){
-            SVars.net.updateLobby();
-        }
-    }
-
-    @Override
     public void updateRPC(){
         //if we're using neither discord nor steam, do no work
-        if(!useDiscord && !steam) return;
+        if(!useDiscord) return;
 
         //common elements they each share
         boolean inGame = state.isGame();
@@ -481,31 +305,10 @@ public class DesktopLauncher extends ClientLauncher{
                 DiscordRPC.send(presence);
             }catch(Exception ignored){}
         }
-
-        if(steam){
-            //Steam mostly just expects us to give it a nice string, but it apparently expects "steam_display" to always be a loc token, so I've uploaded this one which just passes through 'steam_status' raw.
-            SVars.net.friends.setRichPresence("steam_display", "#steam_status_raw");
-
-            if(inGame){
-                SVars.net.friends.setRichPresence("steam_status", gameMapWithWave);
-            }else{
-                SVars.net.friends.setRichPresence("steam_status", uiState);
-            }
-        }
     }
 
     @Override
     public String getUUID(){
-        if(steam){
-            try{
-                byte[] result = new byte[8];
-                new Rand(SVars.user.user.getSteamID().getAccountID()).nextBytes(result);
-                return new String(Base64Coder.encode(result));
-            }catch(Exception e){
-                Log.err(e);
-            }
-        }
-
         return super.getUUID();
     }
 
