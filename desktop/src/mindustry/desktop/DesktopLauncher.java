@@ -14,7 +14,6 @@ import arc.util.Log.*;
 import arc.util.serialization.*;
 import mindustry.*;
 import mindustry.core.Version;
-import mindustry.desktop.steam.*;
 import mindustry.game.EventType.*;
 import mindustry.mod.Mods.*;
 import mindustry.net.*;
