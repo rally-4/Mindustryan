@@ -26,6 +26,10 @@ sourceSets{
     create("netTest"){
         java.setSrcDirs(listOf("src/net/java"))
     }
+
+    create("benchmark"){
+        java.setSrcDirs(listOf("src/benchmark/java"))
+    }
 }
 
 //dependencies that every test source set needs; the source sets below only add what is specific to them
@@ -75,6 +79,9 @@ dependencies{
 
     //server + real client tests: everything the server tests have. The client runs in a child process, see DriverClient
     "netTestImplementation"(files(sourceSets["serverTest"].runtimeClasspath))
+
+    //map benchmarks run on the real headless server, using the server test harness
+    "benchmarkImplementation"(files(sourceSets["serverTest"].runtimeClasspath))
 }
 
 tasks.test{
@@ -110,12 +117,14 @@ tasks.register<JavaExec>("serverSpike"){
     systemProperty("servertest.port", (findProperty("servertest.port") ?: "6567").toString())
 }
 
-//Graphical tasks run on a private Xvfb, never on the user's desktop. -PclientTest.hostDisplay uses the real display instead. Linux only.
+//Graphical tasks run on a private Xvfb, never on the user's desktop. -PclientTest.hostDisplay uses the real display instead. Linux only; on other systems a real window is opened.
 val virtualDisplays = mutableListOf<Process>()
 
 fun useVirtualDisplay(options: ProcessForkOptions){
+    //Xvfb only exists on Linux: elsewhere the client opens a real, controllable window on the user's desktop
     if(!System.getProperty("os.name").lowercase().contains("linux")){
-        throw GradleException("The graphical client tools are only supported on Linux.")
+        logger.lifecycle("Not on Linux: the client will open a real window on this desktop.")
+        return
     }
 
     options.environment("LIBGL_ALWAYS_SOFTWARE", "1")
@@ -151,7 +160,9 @@ tasks.register("virtualDisplayStop"){
     }
 }
 
-val clientJvmArgs = listOf("-XX:+HeapDumpOnOutOfMemoryError", "-XX:+ShowCodeDetailsInExceptionMessages", "--enable-native-access=ALL-UNNAMED")
+//macOS needs the window system on the first thread, as in desktop/build.gradle.kts
+val clientJvmArgs = listOf("-XX:+HeapDumpOnOutOfMemoryError", "-XX:+ShowCodeDetailsInExceptionMessages", "--enable-native-access=ALL-UNNAMED") +
+    (if(System.getProperty("os.name").lowercase().contains("mac")) listOf("-XstartOnFirstThread") else emptyList())
 
 //Boots the real graphical client and serves commands on 127.0.0.1:8765, see driver/CLIENT_TESTING.md
 //Run with: gradle tests:clientDriver --console=plain   (or driver/client-driver.sh start)
@@ -311,6 +322,41 @@ tasks.register("clientTestStopXvfb"){
     doLast{
         xvfbProcess?.destroy()
         xvfbProcess = null
+    }
+}
+
+//Times a fixed number of ticks of a save on the real headless server. Not part of testAll: it is slow, and only meaningful when compared to another run on the same machine.
+//Run with: gradle tests:benchmark   (-Pbenchmark.map=name -Pbenchmark.ticks=N -Pbenchmark.warmup=N -Pbenchmark.runs=N -Pbenchmark.jfr)
+//Saves are read from src/test/resources, results are written to tests/build/benchmark
+tasks.register<Test>("benchmark"){
+    group = "verification"
+    description = "Benchmarks server updates on a real map."
+
+    testClassesDirs = sourceSets["benchmark"].output.classesDirs
+    classpath = sourceSets["benchmark"].runtimeClasspath
+
+    forkEvery = 1
+    maxParallelForks = 1
+    outputs.upToDateWhen{ false }
+    outputs.cacheIf{ false }
+    useJUnitPlatform()
+    workingDir = file("../core/assets")
+
+    //a fixed heap, so that runs only differ in what the code does
+    jvmArgs = listOf("-XX:+HeapDumpOnOutOfMemoryError", "-Xms4g", "-Xmx4g")
+    //-Pbenchmark.jfr records a profile of the measured runs to tests/build/benchmark/benchmark.jfr, for JDK Mission Control or "jfr print"
+    if(project.hasProperty("benchmark.jfr")){
+        systemProperty("benchmark.jfr", layout.buildDirectory.file("benchmark/benchmark.jfr").get().asFile.absolutePath)
+    }
+    systemProperty("servertest.data.dir", layout.buildDirectory.dir("benchmark_server_data").get().asFile.absolutePath)
+    systemProperty("benchmark.out.dir", layout.buildDirectory.dir("benchmark").get().asFile.absolutePath)
+    for(name in listOf("map", "ticks", "warmup", "runs")){
+        findProperty("benchmark.$name")?.let{ systemProperty("benchmark.$name", it.toString()) }
+    }
+
+    testLogging{
+        exceptionFormat = TestExceptionFormat.FULL
+        showStandardStreams = true
     }
 }
 
