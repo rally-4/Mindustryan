@@ -111,6 +111,7 @@ public class Planets{
             atmosphereColor = Color.valueOf("3db899");
             iconColor = Color.valueOf("597be3");
             startSector = 10;
+            alwaysUnlocked = true;
             atmosphereRadIn = -0.01f;
             atmosphereRadOut = 0.3f;
             defaultEnv = Environments.of(Env.underwater, Env.terrestrial);
