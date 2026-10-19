@@ -30,7 +30,7 @@ public class MenuRenderer implements Disposable{
     private float flyerRot = 45f;
     private int flyers = Mathf.chance(0.2) ? Mathf.random(35) : Mathf.random(15);
     //no longer random or "dynamic", mod units in the menu look jarring, and it's not worth the configuration effort
-    private UnitType flyerType = Seq.with(UnitTypes.flare, UnitTypes.horizon, UnitTypes.zenith, UnitTypes.mono, UnitTypes.poly, UnitTypes.mega, UnitTypes.alpha, UnitTypes.beta, UnitTypes.gamma).random();
+    private UnitType flyerType = Seq.with(UnitTypes.evoke, UnitTypes.incite, UnitTypes.emanate, UnitTypes.avert, UnitTypes.obviate, UnitTypes.manifold).random();
 
     public MenuRenderer(){
         Time.mark();
@@ -45,28 +45,19 @@ public class MenuRenderer implements Disposable{
 
         World tiles = state.resizeWorld(width, height);
         //only uses base game ores now, mod ones usually contrast too much with the floor
-        Seq<Block> ores = Seq.with(Blocks.oreCopper, Blocks.oreLead, Blocks.oreScrap, Blocks.oreCoal, Blocks.oreTitanium, Blocks.oreThorium);
+        Seq<Block> ores = Seq.with(Blocks.oreLead, Blocks.oreCoal, Blocks.oreTitanium);
         shadows = new FrameBuffer(width, height);
         int offset = Mathf.random(100000);
         int s1 = offset, s2 = offset + 1, s3 = offset + 2;
         Block[] selected = Structs.random(
-        new Block[]{Blocks.sand, Blocks.sandWall},
-        new Block[]{Blocks.shale, Blocks.shaleWall},
-        new Block[]{Blocks.ice, Blocks.iceWall},
-        new Block[]{Blocks.sand, Blocks.sandWall},
-        new Block[]{Blocks.shale, Blocks.shaleWall},
-        new Block[]{Blocks.ice, Blocks.iceWall},
-        new Block[]{Blocks.moss, Blocks.sporePine},
-        new Block[]{Blocks.dirt, Blocks.dirtWall},
-        new Block[]{Blocks.dacite, Blocks.daciteWall}
+            new Block[]{Blocks.darksand, Blocks.duneWall},
+            new Block[]{Blocks.darksand, Blocks.duneWall},
         );
         Block[] selected2 = Structs.random(
-        new Block[]{Blocks.basalt, Blocks.duneWall},
-        new Block[]{Blocks.basalt, Blocks.duneWall},
-        new Block[]{Blocks.stone, Blocks.stoneWall},
-        new Block[]{Blocks.stone, Blocks.stoneWall},
-        new Block[]{Blocks.moss, Blocks.sporeWall},
-        new Block[]{Blocks.salt, Blocks.saltWall}
+            new Block[]{Blocks.bluemat, Blocks.air},
+            new Block[]{Blocks.bluemat, Blocks.air},
+            new Block[]{Blocks.bluemat, Blocks.air},
+            new Block[]{Blocks.redmat, Blocks.air},
         );
 
         Block ore1 = ores.random();
@@ -75,9 +66,9 @@ public class MenuRenderer implements Disposable{
 
         double tr1 = Mathf.random(0.65f, 0.85f);
         double tr2 = Mathf.random(0.65f, 0.85f);
-        boolean doheat = Mathf.chance(0.25);
-        boolean tendrils = Mathf.chance(0.25);
-        boolean tech = Mathf.chance(0.25);
+        boolean doheat = Mathf.chance(0);
+        boolean tendrils = Mathf.chance(0);
+        boolean tech = Mathf.chance(0);
         int secSize = 10;
 
         Block floord = selected[0], walld = selected[1];
@@ -241,7 +232,7 @@ public class MenuRenderer implements Disposable{
 
     private void drawFlyers(){
         flyerType.sample.elevation = 1f;
-        flyerType.sample.team = Team.sharded;
+        flyerType.sample.team = Team.get(5);
         flyerType.sample.rotation = flyerRot;
         flyerType.sample.setType(flyerType);
         flyerType.sample.heal();
