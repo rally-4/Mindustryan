@@ -111,12 +111,9 @@ android{
 
     buildTypes{
         all{
-            isMinifyEnabled = false
-            isShrinkResources = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles("proguard-rules.pro")
         }
         if(project.hasProperty("RELEASE_STORE_FILE") || System.getenv("CI") == "true"){
             getByName("release"){
