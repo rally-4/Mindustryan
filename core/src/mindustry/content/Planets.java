@@ -108,8 +108,6 @@ public class Planets{
         tantros = new Planet("tantros", sun, 1f, 2){{
             generator = new TantrosPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 4);
-            accessible = false;
-            visible = false;
             atmosphereColor = Color.valueOf("3db899");
             iconColor = Color.valueOf("597be3");
             startSector = 10;
