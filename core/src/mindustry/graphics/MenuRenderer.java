@@ -81,16 +81,12 @@ public class MenuRenderer implements Disposable{
                 Block wall = Blocks.air;
 
                 if(Mathf.chance(0.01)){
-                    switch(floor){
-                        case Blocks.darksand:
-
-                            break;
-                        case Blocks.bluemat:
-                            wall = Blocks.purbush;
-                            break;
-                        case Blocks.redmat:
-                            wall = Blocks.redweed;
-                            break;
+                    if(floor == Blocks.darksand){
+                        
+                    }else if(floor == Blocks.bluemat){
+                        wall = Blocks.purbush;
+                    }else if(floor == Blocks.redmat){
+                        wall = Blocks.redweed;
                     }
                 }
                 if(Mathf.chance(0.005) && floor == Blocks.bluemat && wall == Blocks.air){
