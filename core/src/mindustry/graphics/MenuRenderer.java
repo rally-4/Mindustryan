@@ -80,44 +80,61 @@ public class MenuRenderer implements Disposable{
                 Block ore = Blocks.air;
                 Block wall = Blocks.air;
 
+                if(Mathf.chance(0.01)){
+                    switch(floor){
+                        case Blocks.darksand:
+
+                            break;
+                        case Blocks.bluemat:
+                            wall = Blocks.purbush;
+                            break;
+                        case Blocks.redmat:
+                            wall = Blocks.redweed;
+                            break;
+                    }
+                }
+                if(Mathf.chance(0.005) && floor == Blocks.bluemat && wall == Blocks.air){
+                    wall = Blocks.yellowCoral;
+                }
+                
                 if(Simplex.noise2d(s1, 3, 0.5, 1/20.0, x, y) > 0.5){
                     wall = walld;
                 }
-
+                
                 if(Simplex.noise2d(s3, 3, 0.5, 1/20.0, x, y) > 0.5){
                     floor = floord2;
                     if(wall != Blocks.air){
                         wall = walld2;
                     }
                 }
-
+                
                 if(Simplex.noise2d(s2, 3, 0.3, 1/30.0, x, y) > tr1){
                     ore = ore1;
                 }
-
+                
                 if(Simplex.noise2d(s2, 2, 0.2, 1/15.0, x, y+99999) > tr2){
                     ore = ore2;
                 }
-
+                
                 if(doheat){
                     double heat = Simplex.noise2d(s3, 4, 0.6, 1 / 50.0, x, y + 9999);
                     double base = 0.65;
-
+                    
                     if(heat > base){
                         ore = Blocks.air;
                         wall = Blocks.air;
                         floor = Blocks.basalt;
-
+                        
                         if(heat > base + 0.1){
                             floor = Blocks.hotrock;
-
+                            
                             if(heat > base + 0.15){
                                 floor = Blocks.magmarock;
                             }
                         }
                     }
                 }
-
+                
                 if(tech){
                     int mx = x % secSize, my = y % secSize;
                     int sclx = x / secSize, scly = y / secSize;
@@ -126,24 +143,23 @@ public class MenuRenderer implements Disposable{
                         if(Mathf.dst(mx, my, secSize/2, secSize/2) > secSize/2f + 1){
                             floor = Blocks.darkPanel4;
                         }
-
-
+                        
                         if(wall != Blocks.air && Mathf.chance(0.7)){
                             wall = Blocks.darkMetal;
                         }
                     }
                 }
-
+                
                 if(tendrils){
                     if(Ridged.noise2d(1 + offset, x, y, 1f / 17f) > 0f){
                         floor = Mathf.chance(0.2) ? Blocks.sporeMoss : Blocks.moss;
-
+                        
                         if(wall != Blocks.air){
                             wall = Blocks.sporeWall;
                         }
                     }
                 }
-
+                
                 Tile tile;
                 tiles.set(x, y, (tile = new CachedTile()));
                 tile.x = (short)x;
@@ -153,24 +169,24 @@ public class MenuRenderer implements Disposable{
                 tile.setOverlay(ore);
             }
         }
-
+        
         //don't fire a world load event, it just causes lag and confusion
         state.generating = false;
     }
-
+    
     private void cache(){
-
+        
         //draw shadows
         Draw.proj().setOrtho(0, 0, shadows.width, shadows.height);
         shadows.begin(Color.clear);
         Draw.color(Color.black);
-
+        
         for(Tile tile : state.world){
             if(tile.block() != Blocks.air){
                 Fill.rect(tile.x + 0.5f, tile.y + 0.5f, 1, 1);
             }
         }
-
+        
         Draw.color();
         shadows.end();
 
