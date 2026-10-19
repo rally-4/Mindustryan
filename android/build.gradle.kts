@@ -131,7 +131,7 @@ dependencies{
 }
 
 tasks.register<Exec>("run"){
-    commandLine("${findSdkDir()}/platform-tools/adb", "shell", "am", "start", "-n", "io.rally.mindustryan/mindustry.android.AndroidLauncher")
+    commandLine("${findSdkDir()}/platform-tools/adb", "shell", "am", "start", "-n", "io.rally.mindustryan/mindustryan.android.AndroidLauncher")
 }
 
 if(!hasSprites){
