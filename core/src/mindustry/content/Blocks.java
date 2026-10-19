@@ -49,7 +49,7 @@ public class Blocks{
     arkyciteFloor, arkyicStone,
     redmat, bluemat,
     stoneWall, dirtWall, sporeWall, iceWall, daciteWall, sporePine, snowPine, pine, shrubs, whiteTree, whiteTreeDead, sporeCluster,
-    redweed, purbush, yellowCoral,
+    redweed, purbush, coralChunk, glowBlob, yellowCoral,
     rhyoliteVent, carbonVent, arkyicVent, yellowStoneVent, redStoneVent, crystallineVent, stoneVent, basaltVent,
     regolithWall, yellowStoneWall, rhyoliteWall, carbonWall, redIceWall, ferricStoneWall, beryllicStoneWall, arkyicWall, crystallineStoneWall, redStoneWall, redDiamondWall,
     ferricStone, ferricCraters, carbonStone, beryllicStone, crystallineStone, crystalFloor, yellowStonePlates,
@@ -720,6 +720,14 @@ public class Blocks{
             sclMax = 100f;
         }};
 
+        coralChunk = new StaticCoralWall("coralchunk"){{
+
+        }};
+
+        glowBlob = new Prop("glowblob"){{
+            variants = 1;
+        }};
+        
         boulder = new StaticProp("boulder"){{
             variants = 2;
             stone.asFloor().decoration = craters.asFloor().decoration = charr.asFloor().decoration = this;
