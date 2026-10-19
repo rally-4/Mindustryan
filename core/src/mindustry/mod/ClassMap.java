@@ -276,6 +276,7 @@ public class ClassMap{
         classes.put("Seaweed", mindustry.world.blocks.environment.Seaweed.class);
         classes.put("ShallowLiquid", mindustry.world.blocks.environment.ShallowLiquid.class);
         classes.put("SpawnBlock", mindustry.world.blocks.environment.SpawnBlock.class);
+        classes.put("StaticCoralWall", mindustry.world.blocks.environment.StaticCoralWall.class);
         classes.put("StaticProp", mindustry.world.blocks.environment.StaticProp.class);
         classes.put("StaticTree", mindustry.world.blocks.environment.StaticTree.class);
         classes.put("StaticWall", mindustry.world.blocks.environment.StaticWall.class);
