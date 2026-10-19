@@ -51,13 +51,13 @@ public class MenuRenderer implements Disposable{
         int s1 = offset, s2 = offset + 1, s3 = offset + 2;
         Block[] selected = Structs.random(
             new Block[]{Blocks.darksand, Blocks.duneWall},
-            new Block[]{Blocks.darksand, Blocks.duneWall},
+            new Block[]{Blocks.darksand, Blocks.duneWall}
         );
         Block[] selected2 = Structs.random(
             new Block[]{Blocks.bluemat, Blocks.air},
             new Block[]{Blocks.bluemat, Blocks.air},
             new Block[]{Blocks.bluemat, Blocks.air},
-            new Block[]{Blocks.redmat, Blocks.air},
+            new Block[]{Blocks.redmat, Blocks.air}
         );
 
         Block ore1 = ores.random();
