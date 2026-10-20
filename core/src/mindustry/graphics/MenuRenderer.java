@@ -79,19 +79,6 @@ public class MenuRenderer implements Disposable{
                 Block floor = floord;
                 Block ore = Blocks.air;
                 Block wall = Blocks.air;
-
-                if(Mathf.chance(0.01)){
-                    if(floor == Blocks.darksand){
-                        
-                    }else if(floor == Blocks.bluemat){
-                        wall = Blocks.purbush;
-                    }else if(floor == Blocks.redmat){
-                        wall = Blocks.redweed;
-                    }
-                }
-                if(Mathf.chance(0.005) && floor == Blocks.bluemat && wall == Blocks.air){
-                    wall = Blocks.yellowCoral;
-                }
                 
                 if(Simplex.noise2d(s1, 3, 0.5, 1/20.0, x, y) > 0.5){
                     wall = walld;
@@ -102,6 +89,19 @@ public class MenuRenderer implements Disposable{
                     if(wall != Blocks.air){
                         wall = walld2;
                     }
+                }
+
+                if(Mathf.chance(0.01) && wall == Blocks.air){
+                    if(floor == Blocks.darksand){
+                        
+                    }else if(floor == Blocks.bluemat){
+                        wall = Blocks.purbush;
+                    }else if(floor == Blocks.redmat){
+                        wall = Blocks.redweed;
+                    }
+                }
+                if(Mathf.chance(0.005) && floor == Blocks.bluemat && wall == Blocks.air){
+                    wall = Blocks.yellowCoral;
                 }
                 
                 if(Simplex.noise2d(s2, 3, 0.3, 1/30.0, x, y) > tr1){
