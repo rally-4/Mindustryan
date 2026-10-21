@@ -91,7 +91,7 @@ public class MenuRenderer implements Disposable{
                     }
                 }
 
-                if(Mathf.chance(0.01) && wall == Blocks.air){
+                if(Mathf.chance(0.02) && wall == Blocks.air){
                     if(floor == Blocks.darksand){
                         
                     }else if(floor == Blocks.bluemat){
@@ -100,7 +100,7 @@ public class MenuRenderer implements Disposable{
                         wall = Blocks.redweed;
                     }
                 }
-                if(Mathf.chance(0.005) && floor == Blocks.bluemat && wall == Blocks.air){
+                if(Mathf.chance(0.01) && floor == Blocks.bluemat && wall == Blocks.air){
                     wall = Blocks.yellowCoral;
                 }
                 
