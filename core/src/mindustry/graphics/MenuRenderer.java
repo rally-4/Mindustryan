@@ -98,11 +98,11 @@ public class MenuRenderer implements Disposable{
                     }else if(floor == Blocks.bluemat){
                         wall = Blocks.purbush;
                     }else if(floor == Blocks.redmat){
-                        wall = Blocks.redweed;
+                        // wall = Blocks.redweed;
                     }
                 }
                 if(Mathf.chance(0.01) && floor == Blocks.bluemat && wall == Blocks.air){
-                    // wall = Blocks.yellowCoral;
+                    wall = Blocks.yellowCoral;
                 }
                 
                 if(Simplex.noise2d(s2, 3, 0.3, 1/30.0, x, y) > tr1){
