@@ -60,7 +60,6 @@ public class StatusEffects{
         slow = new StatusEffect("slow"){{
             color = Pal.lightishGray;
             speedMultiplier = 0.4f;
-            show = false;
 
             init(() -> opposite(fast));
         }};
@@ -96,7 +95,6 @@ public class StatusEffects{
             speedMultiplier = 0.94f;
             effect = Fx.muddy;
             effectChance = 0.09f;
-            show = false;
         }};
 
         melting = new StatusEffect("melting"){{
@@ -172,7 +170,6 @@ public class StatusEffects{
         shielded = new StatusEffect("shielded"){{
             color = Pal.accent;
             healthMultiplier = 3f;
-            show = false;
         }};
 
         boss = new StatusEffect("boss"){{
