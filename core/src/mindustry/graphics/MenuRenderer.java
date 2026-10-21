@@ -51,7 +51,8 @@ public class MenuRenderer implements Disposable{
         int s1 = offset, s2 = offset + 1, s3 = offset + 2;
         Block[] selected = Structs.random(
             new Block[]{Blocks.darksand, Blocks.duneWall},
-            new Block[]{Blocks.darksand, Blocks.duneWall}
+            new Block[]{Blocks.darksand, Blocks.duneWall},
+            new Block[]{Blocks.bluemat, Blocks.air}
         );
         Block[] selected2 = Structs.random(
             new Block[]{Blocks.bluemat, Blocks.air},
@@ -101,7 +102,7 @@ public class MenuRenderer implements Disposable{
                     }
                 }
                 if(Mathf.chance(0.01) && floor == Blocks.bluemat && wall == Blocks.air){
-                    wall = Blocks.yellowCoral;
+                    // wall = Blocks.yellowCoral;
                 }
                 
                 if(Simplex.noise2d(s2, 3, 0.3, 1/30.0, x, y) > tr1){
