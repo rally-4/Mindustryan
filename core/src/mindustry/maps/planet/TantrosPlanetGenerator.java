@@ -72,7 +72,7 @@ public class TantrosPlanetGenerator extends PlanetGenerator{
             }
 
             if(noise(x, y, 40f, 1f) > 0.9){
-                //block = Blocks.coralChunk;
+                block = Blocks.coralChunk;
             }
         });
 
