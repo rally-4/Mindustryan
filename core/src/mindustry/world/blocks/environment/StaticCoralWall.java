@@ -19,8 +19,9 @@ public class StaticCoralWall extends StaticWall{
         super.drawBase(tile);
 
         if(Mathf.randomSeed(tile.pos(), 10) < 2){
-            Draw.z(Layer.block + 5f);
+            Draw.z(Layer.block + 5);
             Draw.rect(clusters[0], tile.worldx(), tile.worldy(), Mathf.randomSeedRange(tile.pos() + 1, 180f));
+            Draw.z(Layer.block);
         }
     }
 }
