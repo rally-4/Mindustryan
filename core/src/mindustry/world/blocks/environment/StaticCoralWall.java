@@ -3,6 +3,7 @@ package mindustry.world.blocks.environment;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import mindustry.annotations.Annotations.*;
+import mindustry.graphics.*;
 import mindustry.world.*;
 
 public class StaticCoralWall extends StaticWall{
@@ -18,6 +19,7 @@ public class StaticCoralWall extends StaticWall{
         super.drawBase(tile);
 
         if(Mathf.randomSeed(tile.pos(), 10) < 2){
+            Draw.z(Layer.block + 0.1f);
             Draw.rect(clusters[0], tile.worldx(), tile.worldy(), Mathf.randomSeedRange(tile.pos() + 1, 180f));
         }
     }
