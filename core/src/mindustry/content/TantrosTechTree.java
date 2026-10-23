@@ -16,11 +16,18 @@ public class TantrosTechTree{
                     
                 });
                 node(redmat, () -> {
-                    
+                    node(redweed, () -> {
+                        
+                    });
                 });
                 node(bluemat, () -> {
-                    node(coralChunk, () -> {
+                    node(purbush, () -> {
                         
+                    });
+                    node(yellowCoral, () -> {
+                        node(coralChunk, () -> {
+                            
+                        });
                     });
                 });
             });
