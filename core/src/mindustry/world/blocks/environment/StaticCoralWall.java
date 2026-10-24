@@ -11,7 +11,6 @@ public class StaticCoralWall extends StaticWall{
 
     public StaticCoralWall(String name){
         super(name);
-        clipSize = 90;
         variants = 1;
     }
 
@@ -22,9 +21,9 @@ public class StaticCoralWall extends StaticWall{
         Draw.z(Layer.block);
         Draw.rect(region, tile.worldx(), tile.worldy());
         
-        if(Mathf.randomSeed(tile.pos(), 10) < 2){
+        /** if(Mathf.randomSeed(tile.pos(), 10) < 2){
             Draw.z(Layer.blockOver);
             Draw.rect(clusters[0], tile.worldx(), tile.worldy(), Mathf.randomSeedRange(tile.pos() + 1, 180f));
-        }
+        } */
     }
 }
