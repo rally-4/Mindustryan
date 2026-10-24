@@ -3337,7 +3337,6 @@ public class Blocks{
 
         coreRally = new CoreBlock("core-rally"){{
             requirements(Category.effect, with());
-            alwaysUnlocked = true;
 
             isFirstTier = true;
             unitType = UnitTypes.evoke;
