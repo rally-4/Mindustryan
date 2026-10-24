@@ -148,6 +148,8 @@ public class Blocks{
     coreShard, coreFoundation, coreNucleus, vault, container,
     //storage - erekir
     coreBastion, coreCitadel, coreAcropolis, reinforcedContainer, reinforcedVault,
+    //storage - tantros
+    coreRally,
 
     //turrets
     duo, scatter, scorch, hail, arc, wave, lancer, swarmer, salvo, fuse, ripple, cyclone, foreshadow, spectre, meltdown, segment, parallax, tsunami,
