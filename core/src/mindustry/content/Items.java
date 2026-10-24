@@ -10,7 +10,7 @@ public class Items{
     phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass,
     beryllium, tungsten, oxide, carbide, fissileMatter, dormantCyst;
 
-    public static final Seq<Item> serpuloItems = new Seq<>(), erekirItems = new Seq<>(), erekirOnlyItems = new Seq<>();
+    public static final Seq<Item> serpuloItems = new Seq<>(), erekirItems = new Seq<>(), erekirOnlyItems = new Seq<>(), tantrosItems = new Seq<>();
 
     public static void load(){
         copper = new Item("copper", Color.valueOf("d99d73")){{
@@ -127,25 +127,26 @@ public class Items{
 
         fissileMatter = new Item("fissile-matter", Color.valueOf("5e988d")){{
             radioactivity = 1.5f;
-            hidden = true;
         }};
 
         dormantCyst = new Item("dormant-cyst", Color.valueOf("df824d")){{
             flammability = 0.1f;
-            hidden = true;
         }};
 
         serpuloItems.addAll(
-        scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
-        phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass
+            scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+            phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass
         );
 
         erekirItems.addAll(
-        graphite, thorium, silicon, phaseFabric, surgeAlloy, sand,
-        beryllium, tungsten, oxide, carbide, fissileMatter, dormantCyst
+            graphite, thorium, silicon, phaseFabric, surgeAlloy, sand,
+            beryllium, tungsten, oxide, carbide, fissileMatter, dormantCyst
+        );
+
+        tantrosItems.addAll(
+            sand
         );
 
         erekirOnlyItems.addAll(erekirItems).removeAll(serpuloItems);
-
     }
 }
