@@ -3335,6 +3335,21 @@ public class Blocks{
             researchCostMultiplier = 0.1f;
         }};
 
+        coreRally = new CoreBlock("core-rally"){{
+            requirements(Category.effect, with());
+            alwaysUnlocked = true;
+
+            isFirstTier = true;
+            unitType = UnitTypes.evoke;
+            health = 800;
+            itemCapacity = 1000;
+            size = 2;
+            armor = 2f; 
+            buildCostMultiplier = 0f;
+
+            unitCapModifier = 5;
+        }};
+        
         container = new StorageBlock("container"){{
             requirements(Category.effect, with(Items.titanium, 100));
             size = 2;
