@@ -10,7 +10,7 @@ import static mindustry.content.TechTree.*;
 
 public class TantrosTechTree{
     public static void load(){
-        Planets.tantros.techTree = nodeRoot("tantros", Planets.tantros, () -> {
+        Planets.tantros.techTree = nodeRoot("tantros", coreRally, () -> {
             node(darksand, () -> {
                 node(duneWall, () -> {
                     
