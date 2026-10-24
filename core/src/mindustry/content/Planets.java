@@ -114,10 +114,13 @@ public class Planets{
             alwaysUnlocked = true;
             atmosphereRadIn = -0.01f;
             atmosphereRadOut = 0.3f;
+            defaultCore = Blocks.coreRally;
             defaultEnv = Environments.of(Env.underwater, Env.terrestrial);
             ruleSetter = r -> {
-
+                r.waveTeam = Team.blue;
             };
+
+            unlockedOnLand.add(Blocks.coreRally);
         }};
 
         serpulo = new Planet("serpulo", sun, 1f, 3){{
