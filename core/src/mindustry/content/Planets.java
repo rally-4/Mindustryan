@@ -118,6 +118,7 @@ public class Planets{
             defaultEnv = Environments.of(Env.underwater, Env.terrestrial);
             ruleSetter = r -> {
                 r.waveTeam = Team.blue;
+                r.loadout = ItemStack.list();
             };
 
             unlockedOnLand.add(Blocks.coreRally);
