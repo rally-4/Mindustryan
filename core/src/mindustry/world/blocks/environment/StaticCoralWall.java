@@ -16,11 +16,14 @@ public class StaticCoralWall extends StaticWall{
 
     @Override
     public void drawBase(Tile tile){
-        super.drawBase(tile);
-
+        /** super.drawBase(tile); */
+        
+        Draw.z(Layer.block);
+        Draw.rect(region, tile.worldx(), tile.worldy());
+        
         if(Mathf.randomSeed(tile.pos(), 10) < 2){
-            /** Draw.rect(clusters[0], tile.worldx(), tile.worldy(), Mathf.randomSeedRange(tile.pos() + 1, 180f)); */
-            tile.overlay().drawBase(clusters[0]);
+            Draw.z(Layer.block + 1);
+            Draw.rect(clusters[0], tile.worldx(), tile.worldy(), Mathf.randomSeedRange(tile.pos() + 1, 180f));
         }
     }
 }
