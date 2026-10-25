@@ -10,7 +10,6 @@ import mindustry.world.*;
 public class CoralWall extends Block{
     public @Load(value = "@-cluster#", length = 1) TextureRegion[] clusters;
     
-    public float origin = 0.3f;
     public float sclMin = 60f, sclMax = 100f, magMin = 2f, magMax = 8f, timeRange = 40f;
 
     static Rand rand = new Rand();
@@ -44,8 +43,8 @@ public class CoralWall extends Block{
                 Mathf.sin(vec.y*3 + Vars.state.time, scl, mag) + Mathf.sin(vec.x*3 - Vars.state.time, 70, 0.8f),
                 Mathf.cos(vec.x*3 + Vars.state.time + 8, scl + 6f, mag * 1.1f) + Mathf.sin(vec.y*3 - Vars.state.time, 50, 0.2f)
             )); */
-            float angle = Mathf.sin(Vars.state.time + rand.random(0, timeRange), rand.random(sclMin, sclMax), rand.random(magMin, magMax));
-            Draw.rect(coral, x - Angles.trnsx(angle, origin) + w * 0.5f, y - Angles.trnsy(angle, origin), w, h, origin * 4f, h/2f, angle);
+            float angle = Mathf.sin(Vars.state.time * 0.25f + rand.random(0, timeRange), rand.random(sclMin, sclMax), rand.random(magMin, magMax));
+            Draw.rect(coral, x, y, w, h, angle);
         }
     }
     
