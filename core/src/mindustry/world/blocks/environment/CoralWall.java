@@ -28,7 +28,7 @@ public class CoralWall extends Block{
         w = region.width * region.scl(), h = region.height * region.scl(),
         scl = 1f, mag = 0.2f;
         
-        TextureRegion base = variants == 0 ? region : region[Mathf.randomSeed(tile.pos(), 0, Math.max(0, region.length - 1))];
+        TextureRegion base = variants == 0 ? region : variantRegions[Mathf.randomSeed(tile.pos(), 0, Math.max(0, variantRegions.length - 1))];
         
         Draw.z(Layer.block);
         Draw.rect(base, tile.worldx(), tile.worldy(), 0f);
