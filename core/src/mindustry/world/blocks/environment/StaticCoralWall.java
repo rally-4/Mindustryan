@@ -2,6 +2,7 @@ package mindustry.world.blocks.environment;
 
 import arc.graphics.g2d.*;
 import arc.math.*;
+import mindustry.*;
 import mindustry.annotations.Annotations.*;
 import mindustry.graphics.*;
 import mindustry.world.*;
