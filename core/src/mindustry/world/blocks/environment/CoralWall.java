@@ -9,6 +9,8 @@ import mindustry.world.*;
 
 public class CoralWall extends Block{
     public @Load(value = "@-cluster#", length = 1) TextureRegion[] clusters;
+
+    static Rand rand = new Rand();
     
     public CoralWall(String name){
         super(name);
