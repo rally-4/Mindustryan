@@ -11,7 +11,7 @@ import mindustry.world.*;
 public class CoralChunk extends Block{
     public @Load(value = "@-cluster#", length = 1) TextureRegion[] clusters;
     
-    public StaticCoralWall(String name){
+    public CoralWall(String name){
         super(name);
         variants = 1;
         solid = true;
