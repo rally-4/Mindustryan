@@ -71,7 +71,7 @@ public class TantrosPlanetGenerator extends PlanetGenerator{
                 block = floor.asFloor().wall;
             }
 
-            if(noise(x, y, 40f, 1f) > 0.9){
+            if(noise(x, y, 40f, 1f) > 0.9 && floor != Blocks.tar){
                 block = Blocks.coralChunk;
             }
         });
