@@ -263,6 +263,7 @@ public class ClassMap{
         classes.put("Cliff", mindustry.world.blocks.environment.Cliff.class);
         classes.put("ColoredFloor", mindustry.world.blocks.environment.ColoredFloor.class);
         classes.put("ColoredWall", mindustry.world.blocks.environment.ColoredWall.class);
+        classes.put("CoralWall", mindustry.world.blocks.environment.CoralWall.class);
         classes.put("EmptyFloor", mindustry.world.blocks.environment.EmptyFloor.class);
         classes.put("Floor", mindustry.world.blocks.environment.Floor.class);
         classes.put("UpdateRenderState", mindustry.world.blocks.environment.Floor.UpdateRenderState.class);
