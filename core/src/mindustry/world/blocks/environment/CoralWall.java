@@ -43,7 +43,7 @@ public class CoralWall extends Block{
             )); */
             float sclMin = 30f, sclMax = 50f, magMin = 5f, magMax = 15f, timeRange = 40f;
             float angle = Mathf.sin(Vars.state.time + rand.random(0, timeRange), rand.random(sclMin, sclMax), rand.random(magMin, magMax));
-            Draw.rect(coral, x, y, w, h, origin*4f, h/2f, angle);
+            Draw.rect(coral, x, y, w, h, angle);
         }
     }
     
