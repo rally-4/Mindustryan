@@ -8,7 +8,7 @@ import mindustry.graphics.*;
 import mindustry.world.*;
 
 //Experimental
-public class CoralChunk extends Block{
+public class CoralWall extends Block{
     public @Load(value = "@-cluster#", length = 1) TextureRegion[] clusters;
     
     public CoralWall(String name){
