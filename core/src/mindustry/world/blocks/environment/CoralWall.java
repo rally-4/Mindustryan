@@ -26,7 +26,7 @@ public class CoralWall extends Block{
         x = tile.worldx(), y = tile.worldy(),
         rot = Mathf.randomSeedRange(tile.pos() + 1, 180f),
         w = region.width * region.scl(), h = region.height * region.scl(),
-        scl = 1f, mag = 0.2f;
+        scl = 30f, mag = 0.2f;
         
         TextureRegion base = variants == 0 ? region : variantRegions[Mathf.randomSeed(tile.pos(), 0, Math.max(0, variantRegions.length - 1))];
         
