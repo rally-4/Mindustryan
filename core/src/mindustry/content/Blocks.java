@@ -722,7 +722,7 @@ public class Blocks{
             sclMax = 100f;
         }};
 
-        coralChunk = new StaticCoralWall("coralchunk"){{
+        coralChunk = new CoralWall("coralchunk"){{
 
         }};
 
